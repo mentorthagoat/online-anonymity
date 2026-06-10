@@ -1,0 +1,149 @@
+USER AGENT STUDY
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+This is a deep guide going into how you're identified and tracked online even when you think youre anonymous and are hiding your IP address using a VPN
+
+What is Browser Fingerprinting?
+
+When you type in a website, like for example, google.com, your browser automatically hands over a surprising amount of information. Not just cookies, but dozens of tiny technical details about your device, its software, and settings. AI and Website systems (trackers) can combine all of these into a "fingerprint" that's often unique enough to identify you specifically. Even if you never log in. Always clear your cookies, or use a VPN.
+
+On this next section well be going over each ways these sites track you from least to most intrusive. I hope you enjoy and learned out of this.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+User Agent Strings
+
+This is the first main thing other than your ip address itself is the user agent token that your browser gives off. Think of it as your browsers ID badge that it flashes to every website so they can make money and optimize the site for that user agent token. This can make even the most secure and private setups useless in seconds if configured wrong because it will often even show things like the version of the browser you are using and the version of the operating system. Here's a good example of a user agent string. In this next example we will be breaking down the User Agent String piece by piece in plain english so people like you and me can understand it.
+
+Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:151.0) Gecko/20100101 Firefox/151.0
+
+Now that we have that out there lets decode and explain every piece of it so it makes sense.
+
+Back in the mid 90s, Netscape's browser was called Mozilla. Web servers were configured to only send fancy, feature rich content to browsers with the headers of Mozilla/*. Everyone else got a stripped down shittier version. Sort of like what happens when you try to open normal clearweb sites with no javascript. When Microsoft made Internet Explorer, they faced the same problem. They were getting sent the shitty versions of the site, so they decided to started to put Mozilla/4.0 before every user agent string header. Then when newer browsers came out like chrome firefox and safari, they copied the same thing as internet explorer and still to this day (2026) they still all send useless Mozilla/5.0 Headers.
+
+The Mozilla/* part of the user agent string gives off no fingerprint
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+0. The Absolute worst, being logged into google while you browse:
+All the fingerprinting bypass tricks in the world dont do anything when essentially your identity is tied to every search. No matter how private you made it or whatever fake name you made it under. They are one of, if not the biggest ad company in the world.
+
+1. Cross site tracking via login state:
+This is the most intrusive thing on the list by a mile. Google and Facebook aren't just tracking what browser you use, they're building a profile or collection on your actual identity. Every site you visit, every product you looked at, your political beliefs, your health concerns, your relationship status, your financial situation. They are all tied to your real name and account.
+
+2. WebRTC IP leaks:
+This one isn't fingerprinting, its straight up surveillance. It directly exposes your real IP address even through a VPN often without you knowing. Your real IP can be tied to your physical address through your ISP which essentially makes it identity level exposure masquerading as a technical quirk.
+
+3. IP address:
+Your ISP knows exactly who you are and logs every connection. Law enforcement can subpoena that and dvertisers can geolocate you to your city or neighborhood. Without a VPN or Tor this is basically your home address stapled to every request you make.
+
+4. TCP/IP fingerprinting:
+Operates completely below the browser so no browser setting protects you from it. Identifies your OS at the network layer before you've sent a single header. Scary because most people don't even know it exists and there's very little you can do about it short of Tor or a properly configured VM.
+
+5. Full browser fingerprint composite:
+When canvas + GPU + fonts + audio + screen + timezone are all combined into one hash/number, it becomes a persistent unique identifier that follows you across every site, session, VPN, cookie clears, and even private browsing. Functionally equivalent to a permanent tracking cookie you can never delete.
+
+6. Canvas fingerprinting:
+One of the heaviest individual signals. Completely passive, no permission needed, happens silently in the background, and produces a hash that is stable across sessions and sites. You will never see it happen.
+
+7. Font enumeration:
+Reveals years of your software installation history. The fonts on your machine reflect what programs you've installed — Adobe Creative Suite, Microsoft Office, specific games, developer tools, foreign language packs. Its almost a biography of your computer.
+
+8. AudioContext fingerprinting:
+Same category as canvas. Silent, passive, stable, and most people have never heard of it. The fact that its audio based makes it feel especially invisible.
+
+9. WebGL renderer string:
+Directly exposes your GPU model and driver version. GPU model alone can be correlated with purchase records, system specs posted online, or other databases. Combined with other signals it pins down your hardware configuration precisely.
+
+10. Cookies (third-party): Less intrusive than the other stuff above because they can be cleared and browsers are increasingly blocking them, but for years they were the backbone of the entire ad tracking industry. Still dangerous on any site you actually log into because first-party cookies are very much alive.
+
+11. Timezone:
+More intrusive than it sounds because it directly reveals your physical location independent of your IP. If your VPN says youre in the Netherlands but your timezone says America/Chicago, youve just told the site your real region. Especially bad because almost nobody thinks to spoof it.
+
+12. Screen resolution + devicePixelRatio: Reveals your hardware setup and indirectly your economic situation. A 4K display at high DPI suggests a higher-end machine. Ultrawide resolutions suggest a specific type of power user. Not as much identity revealing but a lot more personal than people realize.
+
+13. HTTP Accept-Language header:
+Reveals your native language and regional locale. For most English speakers this is low stakes. For someone speaking a minority language or regional dialect it can narrow down your country, region, or ethnic background significantly.
+
+14. Installed browser plugins:
+Mostly locked down in modern browsers but historically was extremely revealing. Plugins reflected what you did online — torrent clients, password managers, ad blockers, VPN extensions. A profile of your plugins was almost a profile of your habits.
+
+15. CSS feature detection / dark mode / reduced motion:
+Reveals accessibility needs and personal preferences. Reduced motion preference can indicate someone with vestibular disorders or migraines. Small signals but they touch on personal health in a way that feels invasive.
+
+16. Firefox/rv version tokens: 
+Tells them your exact browser version which combined with OS info suggests how tech-savvy you are, whether youre keeping software updated, and roughly when you installed or last updated the browser.
+
+17. Do Not Track header:
+The most ironic entry. Explicitly asking not to be tracked flags you as privacy-conscious which is itself a data point. Almost no tracker honors it anyway.
+
+18. Windows NT 10.0 token:
+Tells them OS family. Not very personal but contributes to the users profile.
+
+19. Win64 / x64 tokens:
+Hardware architecture. Basically filler at this level. Useful only as padding in a larger fingerprint.
+
+20. HTTP Accept header:
+What content types your browser accepts. Highly standardized, barely personal, mostly noise.
+
+21. Mozilla/5.0 token:
+Dead last. Thirty year old compatibility lie. Tells them nothing. Everyone sends it. Zero fingerprinting value, zero privacy implications.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+The next part of the User Agent Header String is the following.
+
+Windows NT 10.0
+
+This is the OS version token. NT stands for new technology which is the kernel lineage (family tree) that every modern version of windows that it runs on. The 10.0 is somewhat misleading in the way that both windows 10 & 11 use the same 10.0 string. They never bumped it up to 11.0 because it would have broken tons of server side code that blocks content based on OS version. 
+
+This part of the User Agent Header only can tell if you are using windows 10, or windows 11. That said it can still tell that the person is on windows and not MacOS or Linux which heavily narrows the device pool.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Heres the next part of the User Agent Header String.
+
+Win64
+
+This tells you that the version of windows is using a 64 bit based Windows Subsystem. Its like 2 trucks sitting next to each other. (32-bit, and 64-bit). Its like telling the browser im using the big truck (64-bit) and not the small one (32-bit). You'll almost never seea Win32 string on a modern machine bvecause 32-bit windows is basically dead outside of ancient business setups and other things like that. 
+
+64-bit and 32-bit explained
+
+A 32-bit process is like a small pickup truck. It can only carry a limited amount of stuff at once (specifically, it can only use up to 4GB of RAM).
+
+A 64-bit process is like a massive semi-truck. It can carry a shit ton more, access way more RAM, and handle bigger workloads faster.
+
+On its own the token doesnt really give off any fingerprinting since almost everyone sends it, but that being said its still another piece in the puzzle.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+The next section
+
+x64
+
+This is basically the language your processor speaks and the rules it was built around. Think of it like spoken human languages. A person who only speaks french cannot understand someone speaking mandarin. The sounds, grammer, and all around structure are completely different. Even if theyre trying to do the same thing.
+
+CPU's work pretty much the same way. A program compiled for one archetecture (x86-64, also called AMD64/Intel 64). If your CPU speaks a different language/archetecture, it simply cant process the data. It straight up doesnt compute.
+
+The 2 main archetectures you'll see are x86-64 (also called AMD64), and ARM, which is a different language originally designed for lower power consumption. Every smartphone processor uses this archetecture, apples m1, m2, and m3 chips, and even some newer laptops.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Next section
+
+rv:151.0
+
+rv:151:0 is the internal gecko engine revision number that firefox and a lot of other very respected privacy browsers use
+
+It stands for revision/version number or update number. A revision number is just like a car model year. It tells the website how old/new of the version of the site you're using is. For example this one is running version 151.0, which can be corrolated and compared to find out the version of firefox/another gecko based browser is using.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Next Section
+
+Gecko/20100101
+
+This is the human readable public version number and what websites actually notice when they spit out pop-ups like "your browser is outdated" when doing checks and compatability logic. A cool fact is that tor, this is actually frozen to a shared ESR version so every Tor user reports the same number. This makes the version based fingerprinting useless against the crowd.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
