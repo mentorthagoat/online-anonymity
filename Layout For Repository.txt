@@ -1,0 +1,37 @@
+Identity & Fingerprinting Layer
+- TLS/JA3/JA4 fingerprinting (you've already dug into this — a `.txt` would be great reference)
+- Canvas, WebGL, AudioContext fingerprinting mechanics
+- Font enumeration & how it leaks OS/locale
+- HTTP/2 & QUIC fingerprinting (newer, underexplored)
+- `navigator` API surface — what JS can pull without asking
+
+Network Layer
+- DNS leaks — how they happen, split-horizon, DoH/DoT tradeoffs
+- WebRTC ICE leak mechanics
+- IPv6 leakage when IPv4 is tunneled
+- Timing attacks & latency fingerprinting
+- BGP routing & AS-level tracking (who *really* sees your traffic)
+
+Persistence & Tracking
+- Cookie taxonomy (1st/3rd party, SameSite, partitioned)
+- Supercookies — ETags, HSTS cache, favicon cache abuse
+- Browser storage APIs as persistence vectors (IndexedDB, localStorage, Cache API)
+- Link decoration tracking (UTM, `fbclid`, `gclid`, etc.)
+
+Identity Correlation
+- How ad networks build cross-site identity graphs
+- Login fingerprinting — federated login tracking vectors
+- Payment fingerprinting & KYC chain tracing (crypto-relevant)
+
+Infrastructure / Tooling
+- Tor circuit model — guard/middle/exit, what each knows
+- VPN trust model vs. what it actually hides
+- Proxychains & traffic chaining tradeoffs
+- I2P vs. Tor architecture differences
+- Mullvad/IVPN multihop mechanics
+
+OpSec Tradecraft
+- Compartmentalization models (VM-per-identity, etc.)
+- Metadata in files (EXIF, OOXML, PDF trails)
+- Timing correlation attacks on human behavior (login times, posting patterns)
+- The "anonymity set" concept — why you want to look like the crowd
